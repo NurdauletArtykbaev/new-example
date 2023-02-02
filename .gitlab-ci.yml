@@ -1,0 +1,4 @@
+include:
+  - project: 'docker/templates'
+    ref: master
+    file: '/refreshed_templates/.default-laravel-backpack-with-development.yml'

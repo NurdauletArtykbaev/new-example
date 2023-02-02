@@ -1,0 +1,29 @@
+# For more information: https://laravel.com/docs/sail
+version: '3'
+services:
+    app:
+        build: docker/local/.
+        volumes:
+            - ./docker/local/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/local/php/php.ini:/usr/local/etc/php/php.ini
+            - .:/var/www/app
+        depends_on:
+            - database
+        ports:
+            - '${APP_PORT:-80}:80'
+        environment:
+            - APP_ENVIRONMENT=local
+            - CONTAINER_ROLE=app
+    database:
+        image: mariadb/server:10.3
+        volumes:
+            - ./docker-data/mariadb:/var/lib/mysql
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
