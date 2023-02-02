@@ -15,20 +15,22 @@ class OrderController extends Controller
 
     public function index(GetOrdersRequest $request) {
         $filters = $request->validated();
-        $store = $request->user()->store->first();
-        $orders = $this->orderService->getByStore($store, $filters);
+//        $store = $request->user()->store->first();
+//        $orders = $this->orderService->getByStore($store, $filters);
 
+        $orders = collect();
         return OrderResource::collection($orders);
     }
 
     public function show(Request $request, $order) {
-        $store  = $request->user()->store->first();
-        $order  = $this->orderService->getByStoreAndId($store, $order);
+//        $store  = $request->user()->store->first();
+//        $order  = $this->orderService->getByStoreAndId($store, $order);
 
-        if (! $order) {
-            abort(404);
-        }
+//        if (! $order) {
+//            abort(404);
+//        }
 
+        $order = collect();
         $resource = new OrderResource($order);
         $resource->details(true);
 
